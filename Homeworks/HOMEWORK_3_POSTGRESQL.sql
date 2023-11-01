@@ -5,7 +5,7 @@
 
 --1
 
-select count(film_id) 
+select language_id "name"  ,count(film_id) 
 from film
 group by language_id 
 
@@ -15,7 +15,7 @@ select distinct  a.first_name , a.last_name
 from film f join film_actor fa 
 on f.film_id = fa.film_id
 join actor a on a.actor_id = fa.actor_id 
-where lower(substring(a.first_name,1,1))  = lower(substring(a.last_name,1,1))   
+where lower(substring(a.first_name,1,1)) = lower(substring(a.last_name,1,1))   
 
 --3
 
@@ -48,3 +48,85 @@ order by COUNT(S.first_name) desc
 LIMIT 1
 
 --6
+
+select rating , avg(rental_rate) 
+from film r 
+where rating in ('R','G','PG','PG-13')
+group by rating
+having avg(rental_rate) < 3 
+
+--7
+
+select a.first_name ,f.title ,f.description ,f.length 
+from film f join film_actor fa 
+on f.film_id = fa.film_id 
+join actor a on a.actor_id =fa.actor_id 
+where f.length <60
+
+--8
+
+
+
+
+
+--9
+
+select last_name , count(last_name)
+from actor a 
+group by last_name 
+
+--10
+
+select f.title "name" , count(f.title)
+from film f join inventory i  on i.film_id = f.film_id 
+join rental r on i.inventory_id = i.inventory_id 
+group by f.film_id 
+order by count(f.title) desc
+limit 10
+
+--11
+
+select a.first_name ,a.last_name 
+from film f join film_actor fa 
+on f.film_id = fa.film_id 
+join actor a on a.actor_id =fa.actor_id 
+where f.title = 'Alter Victory'
+
+--12
+
+
+select f.film_id , sum(f.rental_duration)
+from film f join  film_category fc on f.film_id  = fc.film_id 
+join inventory i on i.film_id = f.film_id 
+join rental r on r.inventory_id = r.inventory_id
+join category c on fc.category_id = c.category_id 
+where c.name ='Family'
+group by f.film_id
+order by  sum(f.rental_duration) desc
+limit 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
