@@ -5,7 +5,7 @@
 
 --1
 
-select language_id "name"  ,count(film_id) 
+select language_id "name" , count(film_id)
 from film
 group by language_id 
 
